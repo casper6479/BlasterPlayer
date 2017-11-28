@@ -609,18 +609,26 @@ inline static int getPlayerOption(IJKFFOptionCategory category)
     }
 }
 
+#warning 修改了这里 添加 rotateDegress changeRotateDegress
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 - (IJKFFPlayerMovieRotateDegress)rotateDegress
 {
+    NSLog(@"Siu_Czeludzki_修改视频方向监听调用 Get方法 = %zd",_rotateDegress);
     return _rotateDegress;
 }
 
-- (void)changeRotateDegress:(int)degress
+- (void)changeRotateDegress
 {
-    [self willChangeValueForKey:@"rotateDegress"];
-    _rotateDegress = degress;
-    [self didChangeValueForKey:@"rotateDegress"];
+    NSInteger degress = ffp_get_video_rotate_degrees(_mediaPlayer->ffplayer);
+    if (_rotateDegress != degress){
+        NSLog(@"Siu_Czeludzki_修改视频方向监听调用 ChangeRotateDegress方法 = %zd",degress);
+        [self willChangeValueForKey:@"rotateDegress"];
+        _rotateDegress = degress;
+        [self didChangeValueForKey:@"rotateDegress"];
+    }
     [[NSNotificationCenter defaultCenter] postNotificationName:IJKMPMovieRotateAvailableNotification object:self];
 }
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 - (void)setScalingMode: (IJKMPMovieScalingMode) aScalingMode
 {
@@ -1071,7 +1079,7 @@ inline static void fillMetaInternal(NSMutableDictionary *meta, IjkMediaMeta *raw
             break;
         case FFP_MSG_VIDEO_ROTATION_CHANGED:
             NSLog(@"FFP_MSG_VIDEO_ROTATION_CHANGED");
-            [self changeRotateDegress:avmsg->arg1];
+            [self changeRotateDegress];
             break;
         case FFP_MSG_SAR_CHANGED:
             NSLog(@"FFP_MSG_SAR_CHANGED: %d, %d\n", avmsg->arg1, avmsg->arg2);
