@@ -142,6 +142,12 @@ IJK_EXTERN NSString* const IJKMPMoviePlayerIsAirPlayVideoActiveDidChangeNotifica
 // These notifications are posted when the associated movie property becomes available.
 IJK_EXTERN NSString* const IJKMPMovieNaturalSizeAvailableNotification;
 
+#pragma mark - define by Czeludzki
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+// 监听视频角度, 仅在 使用软解码时有效
+IJK_EXTERN NSString* const IJKMPMovieRotateAvailableNotification;
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 // -----------------------------------------------------------------------------
 //  Extend Notifications
 

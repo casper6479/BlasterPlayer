@@ -88,6 +88,7 @@ static const char *kIJKFFRequiredFFmpegVersion = "ff3.3--ijk0.8.0--20170829--001
 @synthesize loadState = _loadState;
 
 @synthesize naturalSize = _naturalSize;
+@synthesize rotateDegress = _rotateDegress;
 @synthesize scalingMode = _scalingMode;
 @synthesize shouldAutoplay = _shouldAutoplay;
 
@@ -608,6 +609,19 @@ inline static int getPlayerOption(IJKFFOptionCategory category)
     }
 }
 
+- (IJKFFPlayerMovieRotateDegress)rotateDegress
+{
+    return _rotateDegress;
+}
+
+- (void)changeRotateDegress:(int)degress
+{
+    [self willChangeValueForKey:@"rotateDegress"];
+    _rotateDegress = degress;
+    [self didChangeValueForKey:@"rotateDegress"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:IJKMPMovieRotateAvailableNotification object:self];
+}
+
 - (void)setScalingMode: (IJKMPMovieScalingMode) aScalingMode
 {
     IJKMPMovieScalingMode newScalingMode = aScalingMode;
@@ -1054,6 +1068,10 @@ inline static void fillMetaInternal(NSMutableDictionary *meta, IjkMediaMeta *raw
             if (avmsg->arg2 > 0)
                 _videoHeight = avmsg->arg2;
             [self changeNaturalSize];
+            break;
+        case FFP_MSG_VIDEO_ROTATION_CHANGED:
+            NSLog(@"FFP_MSG_VIDEO_ROTATION_CHANGED");
+            [self changeRotateDegress:avmsg->arg1];
             break;
         case FFP_MSG_SAR_CHANGED:
             NSLog(@"FFP_MSG_SAR_CHANGED: %d, %d\n", avmsg->arg1, avmsg->arg2);
