@@ -31,6 +31,7 @@
 #import "IJKNotificationManager.h"
 #import "NSString+IJKMedia.h"
 #import "ijkioapplication.h"
+#import "ijkplayer_internal.h"
 #include "string.h"
 
 static const char *kIJKFFRequiredFFmpegVersion = "ff3.3--ijk0.8.0--20170829--001";
@@ -613,15 +614,13 @@ inline static int getPlayerOption(IJKFFOptionCategory category)
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 - (IJKFFPlayerMovieRotateDegress)rotateDegress
 {
-    NSLog(@"Siu_Czeludzki_修改视频方向监听调用 Get方法 = %zd",_rotateDegress);
     return _rotateDegress;
 }
 
 - (void)changeRotateDegress
 {
-    NSInteger degress = ffp_get_video_rotate_degrees(_mediaPlayer->ffplayer);
+    int degress = ffp_get_video_rotate_degrees(_mediaPlayer->ffplayer);
     if (_rotateDegress != degress){
-        NSLog(@"Siu_Czeludzki_修改视频方向监听调用 ChangeRotateDegress方法 = %zd",degress);
         [self willChangeValueForKey:@"rotateDegress"];
         _rotateDegress = degress;
         [self didChangeValueForKey:@"rotateDegress"];
