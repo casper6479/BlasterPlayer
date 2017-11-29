@@ -75,7 +75,10 @@
 
     IJKFFOptions *options = [IJKFFOptions optionsByDefault];
 
+#warning test
     self.player = [[IJKFFMoviePlayerController alloc] initWithContentURL:self.url withOptions:options];
+//    self.player = [[IJKAVMoviePlayerController alloc] initWithContentURL:self.url];
+//    self.player = [[IJKMPMoviePlayerController alloc] initWithContentURL:self.url];
     self.player.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     self.player.view.frame = self.view.bounds;
     self.player.scalingMode = IJKMPMovieScalingModeAspectFit;

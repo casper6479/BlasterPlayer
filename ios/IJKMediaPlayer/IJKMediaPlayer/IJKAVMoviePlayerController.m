@@ -164,6 +164,8 @@ static void *KVO_AVPlayerItem_playbackBufferEmpty       = &KVO_AVPlayerItem_play
 @synthesize shouldAutoplay              = _shouldAutoplay;
 @synthesize isDanmakuMediaAirPlay       = _isDanmakuMediaAirPlay;
 
+@synthesize rotateDegress               = _rotateDegress;
+
 static IJKAVMoviePlayerController* instance;
 
 - (id)initWithContentURL:(NSURL *)aUrl
@@ -255,7 +257,11 @@ static IJKAVMoviePlayerController* instance;
                                  [[NSNotificationCenter defaultCenter]
                                   postNotificationName:IJKMPMovieNaturalSizeAvailableNotification
                                   object:self];
-
+#pragma mark - define by Czeludzki
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                                 [self changeRotateDegress];
+                                 [[NSNotificationCenter defaultCenter] postNotificationName:IJKMPMovieRotateAvailableNotification object:self];
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                                  [self setPlaybackVolume:_playbackVolume];
                              });
                          }];
@@ -970,6 +976,44 @@ static IJKAVMoviePlayerController* instance;
 
     return [videoTracks objectAtIndex:0].naturalSize;
 }
+
+#pragma mark - Czeludzki add
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+- (IJKFFPlayerMovieRotateDegress)rotateDegress
+{
+    if (_playAsset == nil) return 0;
+    return _rotateDegress;
+}
+
+- (void)changeRotateDegress
+{
+    [self willChangeValueForKey:@"rotateDegress"];
+    if (_playAsset == nil) {
+        _rotateDegress = 0;
+        return;
+    }
+    NSArray <AVAssetTrack *>*tracks = [_playAsset tracksWithMediaType:AVMediaTypeVideo];
+    _rotateDegress = 0;
+    if([tracks count] > 0) {
+        AVAssetTrack *videoTrack = tracks.firstObject;
+        CGAffineTransform t = videoTrack.preferredTransform;
+        if(t.a == 0 && t.b == 1.0 && t.c == -1.0 && t.d == 0){
+            // Portrait
+            _rotateDegress = 90;
+        }else if(t.a == 0 && t.b == -1.0 && t.c == 1.0 && t.d == 0){
+            // PortraitUpsideDown
+            _rotateDegress = 270;
+        }else if(t.a == 1.0 && t.b == 0 && t.c == 0 && t.d == 1.0){
+            // LandscapeRight
+            _rotateDegress = 0;
+        }else if(t.a == -1.0 && t.b == 0 && t.c == 0 && t.d == -1.0){
+            // LandscapeLeft
+            _rotateDegress = 180;
+        }
+    }
+    [self didChangeValueForKey:@"rotateDegress"];
+}
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 - (void)setScalingMode: (IJKMPMovieScalingMode) aScalingMode
 {

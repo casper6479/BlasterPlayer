@@ -53,6 +53,16 @@ typedef NS_ENUM(NSInteger, IJKMPMovieFinishReason) {
     IJKMPMovieFinishReasonUserExited
 };
 
+#pragma mark - define by Czeludzki
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+typedef NS_ENUM(int, IJKFFPlayerMovieRotateDegress) {
+    IJKFFPlayerMovieRotateDegress_0 = 0,
+    IJKFFPlayerMovieRotateDegress_90 = 90,
+    IJKFFPlayerMovieRotateDegress_180 = 180,
+    IJKFFPlayerMovieRotateDegress_270 = 270
+};
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 // -----------------------------------------------------------------------------
 // Thumbnails
 
@@ -88,6 +98,13 @@ typedef NS_ENUM(NSInteger, IJKMPMovieTimeOption) {
 @property(nonatomic, readonly) int64_t numberOfBytesTransferred;
 
 @property(nonatomic, readonly) CGSize naturalSize;
+
+#pragma mark - define by Czeludzki
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+// 视频拍摄角度, 仅 (IJKAVMoviePlayerController || (IJKFFMoviePlayerController && 不启用硬解码)) 时有效
+@property(nonatomic, readonly) IJKFFPlayerMovieRotateDegress rotateDegress;
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 @property(nonatomic) IJKMPMovieScalingMode scalingMode;
 @property(nonatomic) BOOL shouldAutoplay;
 

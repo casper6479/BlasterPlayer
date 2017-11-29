@@ -69,16 +69,6 @@ typedef enum IJKLogLevel {
     k_IJK_LOG_SILENT  = 8,
 } IJKLogLevel;
 
-#pragma mark - define by Czeludzki
-// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-typedef NS_ENUM(int, IJKFFPlayerMovieRotateDegress) {
-    IJKFFPlayerMovieRotateDegress_0 = 0,
-    IJKFFPlayerMovieRotateDegress_90 = 90,
-    IJKFFPlayerMovieRotateDegress_180 = 180,
-    IJKFFPlayerMovieRotateDegress_270 = 270
-};
-// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
 @interface IJKFFMoviePlayerController : NSObject <IJKMediaPlayback>
 
 - (id)initWithContentURL:(NSURL *)aUrl
@@ -103,12 +93,6 @@ typedef NS_ENUM(int, IJKFFPlayerMovieRotateDegress) {
 + (BOOL)checkIfFFmpegVersionMatch:(BOOL)showAlert;
 + (BOOL)checkIfPlayerVersionMatch:(BOOL)showAlert
                             version:(NSString *)version;
-
-#pragma mark - define by Czeludzki
-// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-// 视频拍摄角度
-@property(nonatomic, readonly) IJKFFPlayerMovieRotateDegress rotateDegress;
-// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 @property(nonatomic, readonly) CGFloat fpsInMeta;
 @property(nonatomic, readonly) CGFloat fpsAtOutput;

@@ -7,13 +7,13 @@
 
 Video player based on [ffplay](http://ffmpeg.org)
 
-# 为什么 Forked
-> 原生的 ijkplayer 是不具备视频方向判断功能的, 在播放某些竖向拍摄的视频时, 视频会横躺着.  
+## 为什么 Forked
+> 原生的 ijkplayer 是不具备视频方向判断功能的, 在播放某些竖向拍摄的视频时, 视频会横躺.  
 
 ### 为了解决这个问题:
-1. 在 `IJKFFMoviePlayerController.h` 中新增了 `.rotateDegress` 成员变量, 可以获取到当前视频的拍摄角度.
-2. 添加了 `IJKMPMovieRotateAvailableNotification` 通知. 当 `.rorateDegress`发生改变时, 会触发该通知
-3. ijkplayer 的播放功能是离不开 ffplayer 的, 而ffplayer是功能强大且全面的. ffplayer 可以通过函数 `ffp_get_video_rotate_degrees()` 来识别视频角度, 以及发送消息 `FFP_MSG_VIDEO_ROTATION_CHANGED` 用以监听视频角度的改变, 所以我只是利用了上述两项 ffplayer 提供的功能以解决视频播放方向不对的问题, 并没有其它重大的修改.  
+1. 在 `IJKMediaPlayback.h` 中新增了 `.rotateDegress` 成员变量, 可以获取到当前视频的拍摄角度.
+2. 在 `IJKMediaPlayback.h` 中新增了 `IJKMPMovieRotateAvailableNotification` 通知. 当 `.rorateDegress`发生改变时, 会触发该通知.
+3. ijkplayer 的播放功能是基于 ffmpeg的ffplayer 实现的, 而ffplayer是功能强大且全面的. ffplayer 可以通过函数 `ffp_get_video_rotate_degrees()` 来识别视频角度, 以及发送消息 `FFP_MSG_VIDEO_ROTATION_CHANGED` 用以监听视频角度的改变, 所以我只是利用了上述两项 ffplayer 提供的功能以解决视频播放方向不对的问题, 并没有其它重大的修改.  
 
 ### 注意:  
 1. 我仅仅提供了 `IJKMPMovieRotateAvailableNotification`通知 以及 `.rotateDegress` 成员变量, 并没有直接对 ijkplayer.view 做直接的方向修正, 请利用自行修正.

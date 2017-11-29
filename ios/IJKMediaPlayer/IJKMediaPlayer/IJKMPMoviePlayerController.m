@@ -248,4 +248,11 @@
     //mpPlayer还未找到方法实现
 }
 
+#pragma mark - Czeludzki define
+- (IJKFFPlayerMovieRotateDegress)rotateDegress
+{
+    // 在MPMoviePlayer下不实现此方法
+    return 0;
+}
+
 @end

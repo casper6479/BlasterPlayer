@@ -234,7 +234,7 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
 
         [options applyTo:_mediaPlayer];
         _pauseInBackground = NO;
-
+        
         // init extra
         _keepScreenOnWhilePlaying = YES;
         [self setScreenOn:YES];
@@ -602,32 +602,13 @@ inline static int getPlayerOption(IJKFFOptionCategory category)
         self->_naturalSize = CGSizeMake(_videoWidth, _videoHeight);
     }
     [self didChangeValueForKey:@"naturalSize"];
-
+        
     if (self->_naturalSize.width > 0 && self->_naturalSize.height > 0) {
         [[NSNotificationCenter defaultCenter]
          postNotificationName:IJKMPMovieNaturalSizeAvailableNotification
          object:self];
     }
 }
-
-#warning 修改了这里 添加 rotateDegress changeRotateDegress
-// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-- (IJKFFPlayerMovieRotateDegress)rotateDegress
-{
-    return _rotateDegress;
-}
-
-- (void)changeRotateDegress
-{
-    int degress = ffp_get_video_rotate_degrees(_mediaPlayer->ffplayer);
-    if (_rotateDegress != degress){
-        [self willChangeValueForKey:@"rotateDegress"];
-        _rotateDegress = degress;
-        [self didChangeValueForKey:@"rotateDegress"];
-    }
-    [[NSNotificationCenter defaultCenter] postNotificationName:IJKMPMovieRotateAvailableNotification object:self];
-}
-// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 - (void)setScalingMode: (IJKMPMovieScalingMode) aScalingMode
 {
@@ -1679,6 +1660,26 @@ static int ijkff_inject_callback(void *opaque, int message, void *data, size_t d
         }
     });
 }
+
+#pragma mark - Czeludzki add
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+- (IJKFFPlayerMovieRotateDegress)rotateDegress
+{
+    return _rotateDegress;
+}
+
+- (void)changeRotateDegress
+{
+    int degress = ffp_get_video_rotate_degrees(_mediaPlayer->ffplayer);
+    if (_rotateDegress != degress){
+        [self willChangeValueForKey:@"rotateDegress"];
+        _rotateDegress = degress;
+        [self didChangeValueForKey:@"rotateDegress"];
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:IJKMPMovieRotateAvailableNotification object:self];
+}
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 
 @end
 
