@@ -1,4 +1,4 @@
-# ijkplayer
+# Blaster Player
 
  Platform | Build Status
  -------- | ------------
