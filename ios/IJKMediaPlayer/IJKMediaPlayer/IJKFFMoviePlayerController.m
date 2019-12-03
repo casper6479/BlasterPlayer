@@ -32,6 +32,7 @@
 #import "IJKNotificationManager.h"
 #import "NSString+IJKMedia.h"
 #import "ijkioapplication.h"
+#import "ijkplayer_internal.h"
 #include "string.h"
 
 static const char *kIJKFFRequiredFFmpegVersion = "ff3.4--ijk0.8.7--20180103--001";
@@ -89,6 +90,7 @@ static const char *kIJKFFRequiredFFmpegVersion = "ff3.4--ijk0.8.7--20180103--001
 @synthesize loadState = _loadState;
 
 @synthesize naturalSize = _naturalSize;
+@synthesize rotateDegress = _rotateDegress;
 @synthesize scalingMode = _scalingMode;
 @synthesize shouldAutoplay = _shouldAutoplay;
 
@@ -249,7 +251,7 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
 
         [options applyTo:_mediaPlayer];
         _pauseInBackground = NO;
-
+        
         // init extra
         _keepScreenOnWhilePlaying = YES;
         [self setScreenOn:YES];
@@ -717,7 +719,7 @@ inline static int getPlayerOption(IJKFFOptionCategory category)
         self->_naturalSize = CGSizeMake(_videoWidth, _videoHeight);
     }
     [self didChangeValueForKey:@"naturalSize"];
-
+        
     if (self->_naturalSize.width > 0 && self->_naturalSize.height > 0) {
         [[NSNotificationCenter defaultCenter]
          postNotificationName:IJKMPMovieNaturalSizeAvailableNotification
@@ -1171,6 +1173,10 @@ inline static void fillMetaInternal(NSMutableDictionary *meta, IjkMediaMeta *raw
             if (avmsg->arg2 > 0)
                 _videoHeight = avmsg->arg2;
             [self changeNaturalSize];
+            break;
+        case FFP_MSG_VIDEO_ROTATION_CHANGED:
+            NSLog(@"FFP_MSG_VIDEO_ROTATION_CHANGED");
+            [self changeRotateDegress];
             break;
         case FFP_MSG_SAR_CHANGED:
             NSLog(@"FFP_MSG_SAR_CHANGED: %d, %d\n", avmsg->arg1, avmsg->arg2);
@@ -1795,6 +1801,25 @@ static int ijkff_inject_callback(void *opaque, int message, void *data, size_t d
         }
     });
 }
+
+#pragma mark - Czeludzki add
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+- (IJKFFPlayerMovieRotateDegress)rotateDegress
+{
+    return _rotateDegress;
+}
+
+- (void)changeRotateDegress
+{
+    int degress = ffp_get_video_rotate_degrees(_mediaPlayer->ffplayer);
+    if (_rotateDegress != degress){
+        [self willChangeValueForKey:@"rotateDegress"];
+        _rotateDegress = degress;
+        [self didChangeValueForKey:@"rotateDegress"];
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:IJKMPMovieRotateAvailableNotification object:self];
+}
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 #pragma mark IJKFFHudController
 - (void)setHudValue:(NSString *)value forKey:(NSString *)key

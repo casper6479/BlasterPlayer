@@ -53,6 +53,16 @@ typedef NS_ENUM(NSInteger, IJKMPMovieFinishReason) {
     IJKMPMovieFinishReasonUserExited
 };
 
+#pragma mark - define by Czeludzki
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+typedef NS_ENUM(int, IJKFFPlayerMovieRotateDegress) {
+    IJKFFPlayerMovieRotateDegress_0 = 0,
+    IJKFFPlayerMovieRotateDegress_90 = 90,
+    IJKFFPlayerMovieRotateDegress_180 = 180,
+    IJKFFPlayerMovieRotateDegress_270 = 270
+};
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 // -----------------------------------------------------------------------------
 // Thumbnails
 
@@ -91,6 +101,13 @@ typedef NS_ENUM(NSInteger, IJKMPMovieTimeOption) {
 @property(nonatomic, readonly) int64_t numberOfBytesTransferred;
 
 @property(nonatomic, readonly) CGSize naturalSize;
+
+#pragma mark - define by Czeludzki
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+// 视频拍摄角度, 仅 (IJKAVMoviePlayerController || (IJKFFMoviePlayerController && 不启用硬解码)) 时有效
+@property(nonatomic, readonly) IJKFFPlayerMovieRotateDegress rotateDegress;
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 @property(nonatomic) IJKMPMovieScalingMode scalingMode;
 @property(nonatomic) BOOL shouldAutoplay;
 
@@ -144,6 +161,12 @@ IJK_EXTERN NSString* const IJKMPMoviePlayerIsAirPlayVideoActiveDidChangeNotifica
 // Calling -prepareToPlay on the movie player will begin determining movie properties asynchronously.
 // These notifications are posted when the associated movie property becomes available.
 IJK_EXTERN NSString* const IJKMPMovieNaturalSizeAvailableNotification;
+
+#pragma mark - define by Czeludzki
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+// 监听视频角度, 仅在 使用软解码时有效
+IJK_EXTERN NSString* const IJKMPMovieRotateAvailableNotification;
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 // -----------------------------------------------------------------------------
 //  Extend Notifications
