@@ -189,7 +189,7 @@ cd ..
 
 ### Build iOS
 ```
-https://github.com/casper6479/BlasterPlayer.git BlasterPlayer
+git clone https://github.com/casper6479/BlasterPlayer.git BlasterPlayer
 cd BlasterPlayer
 git checkout -B latest k0.8.8
 
