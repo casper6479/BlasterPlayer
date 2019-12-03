@@ -189,8 +189,8 @@ cd ..
 
 ### Build iOS
 ```
-git clone https://github.com/Bilibili/ijkplayer.git ijkplayer-ios
-cd ijkplayer-ios
+https://github.com/casper6479/BlasterPlayer.git BlasterPlayer
+cd BlasterPlayer
 git checkout -B latest k0.8.8
 
 ./init-ios.sh
