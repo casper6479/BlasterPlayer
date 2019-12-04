@@ -43,6 +43,7 @@
 
 - (void)setHudValue:(NSString *)value forKey:(NSString *)key
 {
+    return;
     HudViewCellData *data = nil;
     NSNumber *index = [_keyIndexes objectForKey:key];
     if (index == nil) {
