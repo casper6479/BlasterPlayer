@@ -211,7 +211,7 @@ git checkout -B latest k0.8.8
 
 cd ios
 ./compile-ffmpeg.sh clean
-./compile-ffmpeg.sh all
+./compile-ffmpeg.sh arm64
 
 # Demo
 #     open ios/IJKMediaDemo/IJKMediaDemo.xcodeproj with Xcode
